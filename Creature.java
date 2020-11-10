@@ -1,4 +1,3 @@
-
 /**
  * Abstract class Creature - 
  * The creature is the main class from which all other battling creatures derive.
@@ -7,12 +6,11 @@
  * the creature is alive or knocked out. The creature is also responsible for calculating
  * damage delivered based on the creature's strength (1 to str) 
  * 
- * @author Crosbie
- * @version 2020-10 v1.0
+ * @author Ryan Cathcart
+ * @version 2020-11 v1.0
  */
 // we will learn what the abstract keyword does in a later chapter
-public abstract class Creature
-{
+public abstract class Creature {
     private int str;        // The strength of this creature
     private int max_hp;     // The maximum hit points the creature can have (used if healing enabled)
     private int hp;         // the current numberof hit points the creature has
@@ -22,7 +20,7 @@ public abstract class Creature
      * It is the job of dervived classes to set up the proper number of hit points and 
      * strength for the subclass
      */
-    public Creature (){
+    public Creature() {
         str=10;
         hp=10;
         max_hp = hp;
@@ -36,28 +34,35 @@ public abstract class Creature
      * @param str the strength of the creature, used to calculate damage
      * @param hp the health of the creature at the start of the simulation, and the current health levels during battle
      */
-    public Creature (int str, int hp) {
-       //implement this
+    public Creature(int str, int hp) {
+       this.str = str;
+       this.hp = hp;
+       max_hp = this.hp;
     }
     
+    /**
+     * Get the current hp of this creature
+     * @return This creature's remaining hp
+     */
+    public int getHealth() {
+        return hp;
+    }
     
     /**
      * Allows a creature to determine how much damage it is causing in this round of battle
      * @return a value between 1 and str to be used to cause damage to another creature
      */
-    public int attack(){
-        // TODO: implement a damage method
-        return 0;
+    public int attack() {
+        Randomizer r = new Randomizer();
+        return r.nextInt(str);
     }
-    
     
     /**
      * Is this creature still capable of fighting?
      * @return true when current hit point level is greater than zero
      */
     public boolean isAlive() {
-        // TODO: implement a method to report if the creature yet lives
-        return false; //change this
+        return hp > 0;
     }
     
     /**
@@ -65,18 +70,15 @@ public abstract class Creature
      * @return true when current hit point level is less than or equal to zero
      */
     public boolean isKnockedOut() {
-        //TODO: implement a method to report if the creature has been killed
-        return false; //change this
+        return hp <= 0;
     }
-    
-    
+        
     /**
      * takeDamage receives a value for the amount of damage to subtract from 
      * the current total of hit points
      * @param damage value to remove from hit point count
      */
     public void takeDamage(int damage) {
-        // TODO: implement this
+        hp -= damage;
     }
-    
 }
